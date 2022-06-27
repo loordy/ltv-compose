@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  rmq:
+    build: ./rmq
+    restart: always
+    ports:
+      - "5672"
+    environment:
+      RMQ_NAME: name
+  rmq-management:
+    build: ./rmq-management
+    restart: always
+    ports:
+      - "15672"
+    environment:
+      RMQ_NAME: name
+  pentaho:
+    build: ./pentaho
+    restart: always
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    network_mode: host
+    ports:
+      - "33389"
+  greenplum:
+    build: ./greenplum
+    restart: always
+    ports:
+      - "5432"
+    depends_on:
+      - rmq
+    environment:
+      RMQ_NAME: name
+
