@@ -16,7 +16,7 @@ services:
     environment:
       RMQ_NAME: name
   pentaho:
-    build: ./pentaho
+    build: pentaho-remoteGUI
     restart: always
     environment:
       - DISPLAY=${DISPLAY}
